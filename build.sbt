@@ -6,7 +6,7 @@ organization := "com.micronautics"
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
 crossScalaVersions := Seq("2.10.5", "2.11.7")
-scalaVersion := "2.11.7"
+scalaVersion := "2.10.5"
 scalacOptions ++= Seq("-deprecation", "-encoding", "UTF-8", "-feature", "-target:jvm-1.7", "-unchecked",
     "-Ywarn-adapted-args", "-Ywarn-value-discard", "-Xlint")
 scalacOptions in (Compile, doc) <++= baseDirectory.map {
@@ -32,14 +32,18 @@ libraryDependencies <++= scalaVersion {
 }
 
 libraryDependencies ++= Seq(
-  "com.typesafe.slick"   %% "slick"             % "1.0.1" withSources(),
-  "com.github.tototoshi" %% "slick-joda-mapper" % "0.4.1" withSources()
+  "com.github.nscala-time" %% "nscala-time"             % "2.0.0" withSources(),
+  "com.github.tototoshi"   %% "slick-joda-mapper"       % "0.4.1" withSources(),
+  "com.micronautics"       %% "scalacourses-play-utils" % "0.1.1" withSources(),
+  "com.typesafe.slick"     %% "slick"                   % "1.0.1" withSources(),
+  "org.clapper"            %% "grizzled-scala"          % "1.3"
 )
 
 javacOptions ++= Seq("-Xlint:deprecation", "-Xlint:unchecked", "-source", "1.7", "-target", "1.7", "-g:vars")
 
 resolvers ++= Seq(
-  "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases"
+  "Typesafe Releases"            at "http://repo.typesafe.com/typesafe/releases",
+  "micronautics/play on bintray" at "http://dl.bintray.com/micronautics/play"
 )
 
 logLevel := Level.Warn
