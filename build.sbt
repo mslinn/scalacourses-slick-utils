@@ -5,8 +5,8 @@ name := "scalacourses-slick-utils"
 organization := "com.micronautics"
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
-crossScalaVersions := Seq("2.10.5", "2.11.7")
-scalaVersion := "2.10.5"
+crossScalaVersions := Seq("2.10.6", "2.11.7")
+scalaVersion := "2.10.6"
 scalacOptions ++= Seq("-deprecation", "-encoding", "UTF-8", "-feature", "-target:jvm-1.7", "-unchecked",
     "-Ywarn-adapted-args", "-Ywarn-value-discard", "-Xlint")
 scalacOptions in (Compile, doc) <++= baseDirectory.map {
@@ -42,7 +42,7 @@ libraryDependencies ++= Seq(
 javacOptions ++= Seq("-Xlint:deprecation", "-Xlint:unchecked", "-source", "1.7", "-target", "1.7", "-g:vars")
 
 resolvers ++= Seq(
-  "Typesafe Releases"            at "http://repo.typesafe.com/typesafe/releases",
+  "Lightbend Releases"           at "http://repo.typesafe.com/typesafe/releases",
   "micronautics/play on bintray" at "http://dl.bintray.com/micronautics/play"
 )
 
