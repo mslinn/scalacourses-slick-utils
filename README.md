@@ -3,6 +3,8 @@ Utilities for Slick Referenced from ScalaCourses.com
 
 See the unit tests for usage examples.
 
+There are branches for Slick 1.0.1 and Slick 2.1.0.
+
 ## Installing ##
 
 Add two lines to `build.sbt`.
