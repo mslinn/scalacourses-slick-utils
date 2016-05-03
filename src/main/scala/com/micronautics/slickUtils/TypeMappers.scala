@@ -6,24 +6,24 @@ import grizzled.net.IPAddress
 import org.joda.time.DateTime
 import play.api.libs.json._
 import scala.collection.immutable
-import scala.slick.lifted.{BaseTypeMapper, MappedTypeMapper, TypeMapper}
+import slick.driver.PostgresDriver.simple._
 
-// TODO add typemapper for UUID/String
+/** TODO remove dependency on the Postgres driver implementation */
 trait TypeMappers extends JsonFormats {
   val Logger = org.slf4j.LoggerFactory.getLogger("slickUtils")
   private val comma = ","
 
-  implicit val dateTimeMapper: TypeMapper[DateTime] = MappedTypeMapper.base[DateTime, Timestamp](
-    dt => new Timestamp(dt.getMillis),
-    ts => new DateTime(ts.getTime)
+  implicit val dateTimeMapper = MappedColumnType.base[DateTime, Timestamp](
+    dateTime  => new Timestamp(dateTime.getMillis),
+    timeStamp => new DateTime(timeStamp.getTime)
   )
 
-  implicit val ipAddressMapper: TypeMapper[IPAddress] = MappedTypeMapper.base[IPAddress, String](
+  implicit val ipAddressMapper = MappedColumnType.base[IPAddress, String](
     ipAddress => ipAddress.toString,
-    ipStr => new IPAddress(ipStr.getBytes)
+    ipStr     => new IPAddress(ipStr.getBytes)
   )
 
-  implicit def listIntMapper: BaseTypeMapper[List[Int]] = MappedTypeMapper.base[List[Int], String](
+  implicit def listIntMapper = MappedColumnType.base[List[Int], String](
     list =>
       list.mkString(comma),
     str => {
@@ -39,7 +39,7 @@ trait TypeMappers extends JsonFormats {
   )
 
   /** Maps are persisted as {"key1":1,"key2":2} */
-  implicit def mapStringIntMapper: BaseTypeMapper[immutable.Map[String, Int]] = MappedTypeMapper.base[immutable.Map[String, Int], String](
+  implicit def mapStringIntMapper = MappedColumnType.base[immutable.Map[String, Int], String](
     map =>
       map.toList.mkString(comma),
     str =>
@@ -47,17 +47,17 @@ trait TypeMappers extends JsonFormats {
   )
 
   /** Maps are persisted as {1:2,2:3} */
-  implicit def mapLongListIntMapper: BaseTypeMapper[immutable.Map[Long, List[Int]]] = MappedTypeMapper.base[immutable.Map[Long, List[Int]], String](
+  implicit def mapLongListIntMapper = MappedColumnType.base[immutable.Map[Long, List[Int]], String](
     mapLL => {
       val json = mapLL.toList.map { case (k, v) => Json.toJson((Json.toJson(k), Json.toJson(v))) }
-      Json.toJson(json).toString()
+      Json.toJson(json).toString
     },
     str =>
       Json.fromJson[Map[Long, List[Int]]](Json.parse(str)).get
   )
 
   /** Lists are persisted as 1:"value1",2:"value2" */
-  implicit def listLongMapper: BaseTypeMapper[List[Long]] = MappedTypeMapper.base[List[Long], String](
+  implicit def listLongMapper = MappedColumnType.base[List[Long], String](
     list =>
       list.mkString(comma),
     str => {
@@ -71,8 +71,13 @@ trait TypeMappers extends JsonFormats {
     }
   )
 
+  implicit val uuidMapper = MappedColumnType.base[java.util.UUID, String](
+    uuid   => uuid.toString,
+    string => java.util.UUID.fromString(string)
+  )
+
   /** Vectors are persisted as 1:"value1",2:"value2" */
-  implicit def vectorLongMapper: BaseTypeMapper[Vector[Long]] = MappedTypeMapper.base[Vector[Long], String](
+  implicit def vectorLongMapper = MappedColumnType.base[Vector[Long], String](
     list =>
       list.mkString(comma),
     str => {
@@ -87,7 +92,7 @@ trait TypeMappers extends JsonFormats {
   )
 
   /** Lists are persisted as "key1":"value1","key2":"value2" */
-  implicit def listStringMapper: BaseTypeMapper[List[String]] = MappedTypeMapper.base[List[String], String](
+  implicit def listStringMapper = MappedColumnType.base[List[String], String](
     list =>
       try {
         import play.api.libs.json.Json
