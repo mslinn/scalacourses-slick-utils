@@ -9,7 +9,7 @@ Add two lines to `build.sbt`.
 
  * Add the `scalacourses-slick-utils` dependency:
 ````
-"com.micronautics" %% "scalacourses-slick-utils" % "0.1.1" withSources()
+"com.micronautics" %% "scalacourses-slick-utils" % "2.1.0" withSources()
 ````
 
  * Add this to the `resolvers`:
@@ -17,4 +17,4 @@ Add two lines to `build.sbt`.
 "micronautics/play on bintray" at "http://dl.bintray.com/micronautics/play"
 ````
 
-This library has been built against Scala 2.10.5 / Play 2.2.6 / Slick 1.0.1 but not Scala 2.11.7 / Play 2.4.2.
+This library has been built against Scala 2.10.6 / Play 2.2.6 / Slick 1.0.1 but not Scala 2.11.8 / Play 2.5.3.
