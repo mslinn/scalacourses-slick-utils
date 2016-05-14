@@ -1,6 +1,6 @@
 import bintray.Keys._
 
-version := "2.1.0"
+version := "2.1.1"
 name := "scalacourses-slick-utils"
 organization := "com.micronautics"
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))

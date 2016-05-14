@@ -10,7 +10,8 @@ import slick.driver.PostgresDriver.simple._
 
 /** TODO remove dependency on the Postgres driver implementation */
 trait TypeMappers extends JsonFormats {
-  val Logger = org.slf4j.LoggerFactory.getLogger("slickUtils")
+  def Logger: org.slf4j.Logger
+
   private val comma = ","
 
   implicit val dateTimeMapper = MappedColumnType.base[DateTime, Timestamp](
