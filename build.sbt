@@ -1,12 +1,12 @@
 import bintray.Keys._
 
-version := "2.1.0"
+version := "3.1.0"
 name := "scalacourses-slick-utils"
 organization := "com.micronautics"
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
 crossScalaVersions := Seq("2.10.6", "2.11.8")
-scalaVersion := "2.10.6"
+scalaVersion := "2.11.8"
 scalacOptions ++= Seq("-deprecation", "-encoding", "UTF-8", "-feature", "-target:jvm-1.7", "-unchecked",
     "-Ywarn-adapted-args", "-Ywarn-value-discard", "-Xlint")
 scalacOptions in (Compile, doc) <++= baseDirectory.map {
@@ -20,22 +20,23 @@ scalacOptions in Test ++= Seq("-Yrangepos")
 libraryDependencies <++= scalaVersion {
   case sv if sv.startsWith("2.11") =>
     Seq(
-      "com.typesafe.play" %% "play-json" % "2.5.3"    % "provided",
-      "org.scalatestplus" %% "play"      % "1.4.0-M3" % "test"
+      "com.github.tototoshi" %% "slick-joda-mapper" % "2.2.0" withSources(),
+      "com.typesafe.slick"   %% "slick"             % "3.1.1" withSources(),
+      "org.scalatestplus"    %% "play"              % "1.4.0" % "test" withSources(),
+      "com.typesafe.play"    %% "play-json"         % "2.5.3" % "provided"
     )
 
   case sv if sv.startsWith("2.10") =>
     Seq(
-      "com.typesafe.play" %% "play"      % "2.2.6" % "provided",
-      "org.scalatestplus" %% "play"      % "1.0.0" % "test"
+      "com.github.tototoshi" %% "slick-joda-mapper"  % "1.2.0" withSources(),
+      "com.typesafe.slick"   %% "slick"              % "2.1.0" withSources(),
+      "com.typesafe.play"    %% "play-json"          % "2.2.6" % "provided" withSources(),
+      "org.scalatestplus"    %% "play"               % "1.0.0" % "test"
     )
 }
 
 libraryDependencies ++= Seq(
-  "com.github.nscala-time" %% "nscala-time"             % "2.0.0" withSources(),
-  "com.github.tototoshi"   %% "slick-joda-mapper"       % "1.2.0" withSources(),
-  "com.micronautics"       %% "scalacourses-play-utils" % "0.1.1" withSources(),
-  "com.typesafe.slick"     %% "slick"                   % "2.1.0" withSources(),
+  "com.github.nscala-time" %% "nscala-time"             % "2.12.0" withSources(),
   "org.clapper"            %% "grizzled-scala"          % "1.3"
 )
 
@@ -65,4 +66,3 @@ repository in bintray := "play"
 publishArtifact in Test := false
 
 cancelable := true
-
