@@ -1,6 +1,6 @@
 import bintray.Keys._
 
-version := "3.1.0"
+version := "3.1.1"
 name := "scalacourses-slick-utils"
 organization := "com.micronautics"
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
@@ -18,29 +18,31 @@ scalacOptions in (Compile, doc) <++= baseDirectory.map {
 scalacOptions in Test ++= Seq("-Yrangepos")
 
 libraryDependencies <++= scalaVersion {
-  case sv if sv.startsWith("2.11") =>
+  case sv if sv.startsWith("2.11") | sv.startsWith("2.12") =>
+    javacOptions ++= Seq("-Xlint:deprecation", "-Xlint:unchecked", "-source", "1.8", "-target", "1.8", "-g:vars")
     Seq(
-      "com.github.tototoshi" %% "slick-joda-mapper" % "2.2.0" withSources(),
-      "com.typesafe.slick"   %% "slick"             % "3.1.1" withSources(),
-      "org.scalatestplus"    %% "play"              % "1.4.0" % "test" withSources(),
-      "com.typesafe.play"    %% "play-json"         % "2.5.3" % "provided"
+      "com.github.tototoshi"   %% "slick-joda-mapper"  % "2.2.0" withSources(),
+      "com.typesafe.slick"     %% "slick"              % "3.1.1" withSources(),
+      "com.typesafe.slick"     %% "slick-hikaricp"     % "3.1.1" exclude("com.zaxxer", "HikariCP-java6") withSources(),
+      "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % "test" withSources(),
+      "com.typesafe.play"      %% "play-json"          % "2.5.4" % "provided",
+      "org.clapper"            %% "grizzled-scala"     % "2.6.0" withSources()
     )
 
   case sv if sv.startsWith("2.10") =>
+    javacOptions ++= Seq("-Xlint:deprecation", "-Xlint:unchecked", "-source", "1.7", "-target", "1.7", "-g:vars")
     Seq(
       "com.github.tototoshi" %% "slick-joda-mapper"  % "1.2.0" withSources(),
       "com.typesafe.slick"   %% "slick"              % "2.1.0" withSources(),
       "com.typesafe.play"    %% "play-json"          % "2.2.6" % "provided" withSources(),
-      "org.scalatestplus"    %% "play"               % "1.0.0" % "test"
+      "org.scalatestplus"    %% "play"               % "1.0.0" % "test",
+      "org.clapper"          %% "grizzled-scala"     % "1.3"   withSources()
     )
 }
 
 libraryDependencies ++= Seq(
-  "com.github.nscala-time" %% "nscala-time"             % "2.12.0" withSources(),
-  "org.clapper"            %% "grizzled-scala"          % "1.3"
+  "com.github.nscala-time" %% "nscala-time"  % "2.12.0" withSources()
 )
-
-javacOptions ++= Seq("-Xlint:deprecation", "-Xlint:unchecked", "-source", "1.7", "-target", "1.7", "-g:vars")
 
 resolvers ++= Seq(
   "Lightbend Releases"           at "http://repo.typesafe.com/typesafe/releases",
