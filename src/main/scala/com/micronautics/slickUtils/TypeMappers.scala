@@ -23,6 +23,23 @@ trait TypeMappers {
     ipStr     => new IPAddress(ipStr.getBytes)
   )
 
+  /** Persists to "1.0,2.0,3.0,4.0" */
+  implicit def listDoubleMapper = MappedColumnType.base[List[Double], String](
+    list =>
+      list.mkString(comma),
+    str => {
+      try {
+        val r = str.trim.split(comma).filter(_.nonEmpty).map(_.toDouble).toList
+        r
+      } catch {
+        case e: Throwable =>
+          Logger.error(e.getMessage)
+          Nil
+      }
+    }
+  )
+
+  /** Persists to "1,2,3,4" */
   implicit def listIntMapper = MappedColumnType.base[List[Int], String](
     list =>
       list.mkString(comma),
