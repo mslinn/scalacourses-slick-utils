@@ -1,6 +1,6 @@
 import bintray.Keys._
 
-version := "3.1.2"
+version := "3.1.3"
 name := "scalacourses-slick-utils"
 organization := "com.micronautics"
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
@@ -8,8 +8,18 @@ licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 crossScalaVersions := Seq("2.11.8"/*, "2.12.0"*/)
 
 scalaVersion := "2.11.8"
-scalacOptions ++= Seq("-deprecation", "-encoding", "UTF-8", "-feature", "-target:jvm-1.7", "-unchecked",
-    "-Ywarn-adapted-args", "-Ywarn-value-discard", "-Xlint")
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-encoding", "UTF-8",
+  "-feature",
+  "-unchecked",
+  "-target:jvm-1.8",
+  "-Xlint",
+  "-Ywarn-adapted-args",
+  "-Ywarn-dead-code",
+  "-Ywarn-numeric-widen",
+  "-Xfuture"
+)
 scalacOptions in (Compile, doc) <++= baseDirectory.map {
   (bd: File) => Seq[String](
      "-sourcepath", bd.getAbsolutePath,
@@ -22,12 +32,13 @@ libraryDependencies <++= scalaVersion {
   case sv if sv.startsWith("2.11") | sv.startsWith("2.12") =>
     javacOptions ++= Seq("-Xlint:deprecation", "-Xlint:unchecked", "-source", "1.8", "-target", "1.8", "-g:vars")
     Seq(
-      "com.github.tototoshi"   %% "slick-joda-mapper"  % "2.2.0" withSources(),
-      "com.typesafe.slick"     %% "slick"              % "3.1.1" withSources(),
-      "com.typesafe.slick"     %% "slick-hikaricp"     % "3.1.1" exclude("com.zaxxer", "HikariCP-java6") withSources(),
-      "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % "test" withSources(),
-      "com.typesafe.play"      %% "play-json"          % "2.5.4" % "provided",
-      "org.clapper"            %% "grizzled-scala"     % "2.6.0" withSources()
+      "com.zaxxer"             %  "HikariCP"           % "2.3.12" withSources(),
+      "com.github.tototoshi"   %% "slick-joda-mapper"  % "2.2.0"  withSources(),
+      "com.typesafe.slick"     %% "slick"              % "3.1.1"  withSources(),
+      "com.typesafe.slick"     %% "slick-hikaricp"     % "3.1.1"  exclude("com.zaxxer", "HikariCP-java6") withSources(),
+      "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1"  % "test" withSources(),
+      "com.typesafe.play"      %% "play-json"          % "2.5.4"  % "provided",
+      "org.clapper"            %% "grizzled-scala"     % "2.6.0"  withSources()
     )
 
   case sv if sv.startsWith("2.10") =>
