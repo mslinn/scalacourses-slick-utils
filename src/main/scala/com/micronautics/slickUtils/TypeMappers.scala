@@ -1,5 +1,6 @@
 package com.micronautics.slickUtils
 
+import java.net.URL
 import java.sql.Timestamp
 import grizzled.net.IPAddress
 import org.joda.time.DateTime
@@ -12,6 +13,11 @@ import slick.driver.PostgresDriver.api._
 trait TypeMappers {
   val Logger = org.slf4j.LoggerFactory.getLogger("slickUtils")
   private val comma = ","
+
+  implicit val urlMapper = MappedColumnType.base[URL, String](
+    url    => url.toString,
+    string => new URL(string)
+  )
 
   implicit val dateTimeMapper = MappedColumnType.base[DateTime, Timestamp](
     dateTime  => new Timestamp(dateTime.getMillis),
