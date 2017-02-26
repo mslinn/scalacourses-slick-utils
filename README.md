@@ -1,4 +1,7 @@
 # scalacourses-play-utils
+
+[ ![Download](https://api.bintray.com/packages/micronautics/play/scalacourses-slick-utils/images/download.svg) ](https://bintray.com/micronautics/play/scalacourses-slick-utils/_latestVersion)
+ 
 Utilities for Slick Referenced from ScalaCourses.com
 
 See the unit tests for usage examples.
