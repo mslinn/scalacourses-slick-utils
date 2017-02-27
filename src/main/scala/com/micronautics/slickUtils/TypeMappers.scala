@@ -11,7 +11,7 @@ import slick.driver.PostgresDriver.api._
 
 /** TODO remove dependency on the Postgres driver implementation */
 trait TypeMappers {
-  val Logger = org.slf4j.LoggerFactory.getLogger("slickUtils")
+  val Logger: org.slf4j.Logger = org.slf4j.LoggerFactory.getLogger("slickUtils")
   private val comma = ","
 
   implicit val urlMapper = MappedColumnType.base[URL, String](
@@ -100,19 +100,20 @@ trait TypeMappers {
   )
 
   /** Vectors are persisted as 1:"value1",2:"value2" */
-  implicit def vectorLongMapper = MappedColumnType.base[Vector[Long], String](
-    list =>
-      list.mkString(comma),
-    str => {
-      try {
-        str.trim.split(comma).filter(_.nonEmpty).map(_.toLong).toVector
-      } catch {
-        case e: Throwable =>
-          Logger.error(e.getMessage)
-          Vector.empty[Long]
+  implicit def vectorLongMapper =
+    MappedColumnType.base[Vector[Long], String](
+      list =>
+        list.mkString(comma),
+      str => {
+        try {
+          str.trim.split(comma).filter(_.nonEmpty).map(_.toLong).toVector
+        } catch {
+          case e: Throwable =>
+            Logger.error(e.getMessage)
+            Vector.empty[Long]
+        }
       }
-    }
-  )
+    )
 
   /** Lists are persisted as "key1":"value1","key2":"value2" */
   implicit def listStringMapper = MappedColumnType.base[List[String], String](
@@ -153,7 +154,7 @@ trait TypeMappers {
 
   implicit val mapLongIntReads: Reads[Map[Long, Int]] =
     new Reads[Map[Long, Int]] {
-      def reads(json: JsValue) =
+      def reads(json: JsValue): JsResult[Map[Long, Int]] =
         json.validate[Map[String, Int]].map(_.map {
           case (key, value) => key.toLong -> value
         })
@@ -161,7 +162,7 @@ trait TypeMappers {
 
   implicit val mapLongListIntReads: Reads[Map[Long, List[Int]]] = {
     new Reads[Map[Long, List[Int]]] {
-      def reads(json: JsValue) =
+      def reads(json: JsValue): JsResult[Map[Long, List[Int]]] =
         json.validate[Map[String, List[Int]]].map(_.map {
           case (key, value) => key.toLong -> value
         })
@@ -169,7 +170,7 @@ trait TypeMappers {
   }
 
   implicit val mapStringIntWrites = new Writes[Map[String, Int]] {
-    def writes(mapStringInt: Map[String, Int]) = {
+    def writes(mapStringInt: Map[String, Int]): JsArray = {
       Json.arr(mapStringInt.map {
         case (key, value) => Json.obj(key -> value)
       }.toSeq)
@@ -177,7 +178,7 @@ trait TypeMappers {
   }
 
   implicit val mapStringLongWrites = new Writes[Map[String, Long]] {
-    def writes(mapStringLong: Map[String, Long]) = {
+    def writes(mapStringLong: Map[String, Long]): JsArray = {
       Json.arr(mapStringLong.map {
         case (key, value) => Json.obj(key -> value)
       }.toSeq)
