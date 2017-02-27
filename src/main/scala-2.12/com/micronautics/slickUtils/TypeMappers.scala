@@ -4,10 +4,9 @@ import java.net.URL
 import java.sql.Timestamp
 import grizzled.net.IPAddress
 import org.joda.time.DateTime
-import play.api.data.validation.ValidationError
 import play.api.libs.json._
 import scala.collection.immutable
-import slick.driver.PostgresDriver.api._
+import slick.jdbc.PostgresProfile.api._
 
 /** TODO remove dependency on the Postgres driver implementation */
 trait TypeMappers {

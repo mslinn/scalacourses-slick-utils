@@ -9,7 +9,7 @@ import play.api.{Application, Environment}
 import play.api.inject.guice.GuiceApplicationBuilder
 import scala.language.implicitConversions
 
-/*@RunWith(classOf[JUnitRunner])
+@RunWith(classOf[JUnitRunner])
 class TestQuick extends PlaySpec with OneServerPerSuite with TypeMappers {
   "Tuple2[Int, String]" should {
     "Map to" in {
@@ -18,4 +18,4 @@ class TestQuick extends PlaySpec with OneServerPerSuite with TypeMappers {
     "Map from" in {
     }
   }
-}*/
+}
