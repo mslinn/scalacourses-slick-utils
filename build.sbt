@@ -28,12 +28,12 @@ scalacOptions ++= (
     "-Xlint"
   )
 )
-scalacOptions in (Compile, doc) <++= baseDirectory.map {
+scalacOptions in (Compile, doc) ++= baseDirectory.map {
   (bd: File) => Seq[String](
      "-sourcepath", bd.getAbsolutePath,
      "-doc-source-url", "https://github.com/mslinn/scalacourses-slick-utils/tree/master€{FILE_PATH}.scala"
   )
-}
+}.value
 scalacOptions in Test ++= Seq("-Yrangepos")
 
 libraryDependencies ++= scalaVersion {
@@ -42,6 +42,7 @@ libraryDependencies ++= scalaVersion {
     Seq(
       "com.zaxxer"             %  "HikariCP"           % "2.5.1"     withSources(),
       "com.github.tototoshi"   %% "slick-joda-mapper"  % "2.4.0"     withSources(),
+      "com.typesafe.play"      %% "play"               % "2.6.0-M1"  % Provided,
       "com.typesafe.slick"     %% "slick"              % "3.2.0-RC1" withSources(),
       "com.typesafe.slick"     %% "slick-hikaricp"     % "3.2.0-RC1" withSources(),
       "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0-M2"  % Test withSources(),
@@ -57,7 +58,7 @@ libraryDependencies ++= scalaVersion {
       "com.typesafe.slick"     %% "slick"              % "3.1.1"  withSources(),
       "com.typesafe.slick"     %% "slick-hikaricp"     % "3.1.1"  exclude("com.zaxxer", "HikariCP-java6") withSources(),
       "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1"  % Test withSources(),
-      "com.typesafe.play"      %% "play-json"          % "2.5.12"  % Provided,
+      "com.typesafe.play"      %% "play-json"          % "2.5.12" % Provided,
       "org.clapper"            %% "grizzled-scala"     % "4.2.0"  withSources()
     )
 
@@ -77,9 +78,9 @@ libraryDependencies ++= Seq(
 )
 
 resolvers ++= Seq(
-  "Lightbend Releases"           at "http://repo.typesafe.com/typesafe/releases",
+  "Lightbend Releases"            at "http://repo.typesafe.com/typesafe/releases",
   "micronautics/slick on bintray" at "http://dl.bintray.com/micronautics/slick",
-  "micronautics/play on bintray" at "http://dl.bintray.com/micronautics/play"
+  "micronautics/play on bintray"  at "http://dl.bintray.com/micronautics/play"
 )
 
 logLevel := Level.Warn
