@@ -7,7 +7,9 @@ Utilities for Slick Referenced from ScalaCourses.com
 
 See the unit tests for usage examples.
 
-There are branches for Slick 1.0.1, 2.1.0, 3.1.1 and 3.2.0.
+This version supports Slick 3.2.x, Java 8, Play 2.6.x and Scala 2.12.x.
+
+There is a dependency on the Postgres driver.
 
 ## Installing ##
 
@@ -15,12 +17,10 @@ Add two lines to `build.sbt`.
 
  * Add the `scalacourses-slick-utils` dependency:
 ````
-"com.micronautics" %% "scalacourses-slick-utils" % "0.1.1" withSources()
+"com.micronautics" %% "scalacourses-slick-utils" % "3.2.0" withSources()
 ````
 
  * Add this to the `resolvers`:
 ````
 "micronautics/play on bintray" at "http://dl.bintray.com/micronautics/play"
 ````
-
-This library has been built against Scala 2.10.5 / Play 2.2.6 / Slick 1.0.1 but not Scala 2.11.7 / Play 2.4.2.
