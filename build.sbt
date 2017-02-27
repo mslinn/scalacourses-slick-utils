@@ -1,13 +1,13 @@
 import sbt.Keys._
 
-version := "3.1.5"
+version := "3.2.0"
 name := "scalacourses-slick-utils"
 organization := "com.micronautics"
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
 crossScalaVersions := Seq("2.11.8", "2.12.1")
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.1"
 scalacOptions ++= (
   scalaVersion {
     case sv if sv.startsWith("2.10") => Nil
