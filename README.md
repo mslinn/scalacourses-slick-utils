@@ -3,9 +3,9 @@ Utilities for Slick Referenced from ScalaCourses.com
 
 See the unit tests for usage examples.
 
-This is the branch for Slick 3.2.x, Java 8, Play 2.6.x and Scala 2.12.x.
+This version supports Slick 3.2.x, Java 8, Play 2.6.x and Scala 2.12.x.
 
-This version has a dependency on the Postgres driver.
+There is a dependency on the Postgres driver.
 
 ## Installing ##
 
