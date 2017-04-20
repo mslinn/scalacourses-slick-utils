@@ -17,7 +17,7 @@ Add two lines to `build.sbt`.
 
  * Add the `scalacourses-slick-utils` dependency:
 ````
-"com.micronautics" %% "scalacourses-slick-utils" % "3.2.0" withSources()
+"com.micronautics" %% "scalacourses-slick-utils" % "3.2.1" withSources()
 ````
 
  * Add this to the `resolvers`:
