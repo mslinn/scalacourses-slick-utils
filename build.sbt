@@ -1,13 +1,13 @@
 import sbt.Keys._
 
-version := "3.2.0"
+version := "3.2.1"
 name := "scalacourses-slick-utils"
 organization := "com.micronautics"
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
-scalaVersion := "2.12.1"
+scalaVersion := "2.12.2"
 
-crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.1")
+crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.2")
 
 scalacOptions ++=
   scalaVersion {
@@ -42,24 +42,24 @@ scalacOptions in Test ++= Seq("-Yrangepos")
 libraryDependencies ++= scalaVersion {
   case sv if sv.startsWith("2.12") => // Play 2.6.x, Scala 2.12.x, Slick 3.2.x, Java 8
     Seq(
-      "com.zaxxer"             %  "HikariCP"           % "2.5.1"     withSources(),
-      "com.github.tototoshi"   %% "slick-joda-mapper"  % "2.4.0"     withSources(),
-      "com.typesafe.play"      %% "play"               % "2.6.0-M1"  % Provided,
-      "com.typesafe.slick"     %% "slick"              % "3.2.0-RC1" withSources(),
-      "com.typesafe.slick"     %% "slick-hikaricp"     % "3.2.0-RC1" withSources(),
-      "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0-M2"  % Test withSources(),
+      "com.zaxxer"             %  "HikariCP"           % "2.6.1"     withSources(),
+      "com.github.tototoshi"   %% "slick-joda-mapper"  % "2.3.0"     withSources(),
+      "com.typesafe.play"      %% "play"               % "2.6.0-M4"  % Provided,
+      "com.typesafe.slick"     %% "slick"              % "3.2.0"     withSources(),
+      "com.typesafe.slick"     %% "slick-hikaricp"     % "3.2.0"     withSources(),
+      "org.scalatestplus.play" %% "scalatestplus-play" % "3.0.0-M2"  % Test withSources(),
       "com.typesafe.play"      %% "play-json"          % "2.6.0-M3"  % Provided,
       "org.clapper"            %% "grizzled-scala"     % "4.2.0"     withSources()
     )
 
-  case sv if sv.startsWith("2.11") => // Play 2.5.x, Scala 2.11.x, Slick 3.1.x, Java 8
+  case sv if sv.startsWith("2.11") => // Play 2.5.x, Scala 2.11.x, Slick 3.2.x, Java 8
     Seq(
-      "com.zaxxer"             %  "HikariCP"           % "2.5.1"  withSources(),
-      "com.github.tototoshi"   %% "slick-joda-mapper"  % "2.2.0"  withSources(),
-      "com.typesafe.slick"     %% "slick"              % "3.1.1"  withSources(),
-      "com.typesafe.slick"     %% "slick-hikaricp"     % "3.1.1"  exclude("com.zaxxer", "HikariCP-java6") withSources(),
-      "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1"  % Test withSources(),
-      "com.typesafe.play"      %% "play-json"          % "2.5.12" % Provided,
+      "com.zaxxer"             %  "HikariCP"           % "2.6.1"  withSources(),
+      "com.github.tototoshi"   %% "slick-joda-mapper"  % "2.3.0"  withSources(), // Not available Apr 9/17
+      "com.typesafe.slick"     %% "slick"              % "3.2.0"  withSources(),
+      "com.typesafe.slick"     %% "slick-hikaricp"     % "3.2.0"  exclude("com.zaxxer", "HikariCP-java6") withSources(),
+      "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0"  % Test withSources(),
+      "com.typesafe.play"      %% "play-json"          % "2.5.13" % Provided,
       "org.clapper"            %% "grizzled-scala"     % "4.2.0"  withSources()
     )
 
@@ -85,6 +85,8 @@ resolvers ++= Seq(
   "micronautics/play on bintray"  at "http://dl.bintray.com/micronautics/play"
 )
 
+cancelable := true
+
 logLevel := Level.Warn
 
 // Only show warnings and errors on the screen for compilations.
@@ -102,4 +104,11 @@ bintrayOrganization := Some("micronautics")
 bintrayRepository := "play"
 publishArtifact in Test := false
 
-cancelable := true
+// sbt-site settings
+enablePlugins(SiteScaladocPlugin)
+siteSourceDirectory := target.value / "api"
+publishSite
+
+// sbt-ghpages settings
+enablePlugins(GhpagesPlugin)
+git.remoteRepo := "git@github.com:mslinn/scalacourses-slick-utils.git"
