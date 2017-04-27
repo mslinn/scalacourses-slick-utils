@@ -109,6 +109,9 @@ enablePlugins(SiteScaladocPlugin)
 siteSourceDirectory := target.value / "api"
 publishSite
 
+// sbt-git settings (dependency of sbt-ghpages)
+useJGit
+
 // sbt-ghpages settings
 enablePlugins(GhpagesPlugin)
 git.remoteRepo := "git@github.com:mslinn/scalacourses-slick-utils.git"
