@@ -9,6 +9,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License. */
 
-//addSbtPlugin("com.typesafe.sbt" % "sbt-git"     % "0.9.2")
-addSbtPlugin("com.typesafe.sbt" % "sbt-site"    % "1.2.0")
-addSbtPlugin("com.typesafe.sbt" % "sbt-ghpages" % "0.6.0") // depends on sbt-git 0.8.5
+resolvers += Resolver.jcenterRepo
+// b0rked, awaiting a fix, see https://github.com/sbt/sbt-bintray/issues/104
+//addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.4.0")
+addSbtPlugin("me.lessis" % "bintray-sbt" % "0.3.0")
